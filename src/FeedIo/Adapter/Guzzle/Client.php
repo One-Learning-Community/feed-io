@@ -48,10 +48,15 @@ class Client implements ClientInterface
     public function getResponse(string $url, DateTime $modifiedSince = null): ResponseInterface
     {
         if ($modifiedSince) {
-            $headResponse = $this->request('head', $url, $modifiedSince);
-            if (304 === $headResponse->getStatusCode()) {
-                return $headResponse;
+            try {
+                $headResponse = $this->request('head', $url, $modifiedSince);
+                if (304 === $headResponse->getStatusCode()) {
+                    return $headResponse;
+                }
+            } catch (NotFoundException $ex) {
+                // Continue to regular GET attempt, in case HEAD is not supported by server
             }
+
         }
 
         return $this->request('get', $url, $modifiedSince);
