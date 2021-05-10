@@ -66,16 +66,13 @@ class Reader
     public function read(string $url, FeedInterface $feed, DateTime $modifiedSince = null): Result
     {
         $this->logger->debug("start reading {$url}");
-        if (is_null($modifiedSince)) {
-            $modifiedSince = new DateTime('1800-01-01');
-        }
 
         try {
             $this->logger->info("hitting {$url}");
             $response = $this->client->getResponse($url, $modifiedSince);
             $document = $this->handleResponse($response, $feed);
 
-            return new Result($document, $feed, $modifiedSince, $response, $url);
+            return new Result($document, $feed, $modifiedSince ?: new DateTime('1800-01-01'), $response, $url);
         } catch (\Exception $e) {
             $this->logger->warning("{$url} read error : {$e->getMessage()}");
             throw new ReadErrorException($e->getMessage(), $e->getCode(), $e);
