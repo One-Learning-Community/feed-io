@@ -20,11 +20,15 @@ class Client implements ClientInterface
      * Default user agent provided with the package
      */
     const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1';
+    protected GuzzleClientInterface $guzzleClient;
+    protected string $userAgent = self::DEFAULT_USER_AGENT;
 
     public function __construct(
-        protected GuzzleClientInterface $guzzleClient,
-        protected string $userAgent = self::DEFAULT_USER_AGENT
+        GuzzleClientInterface $guzzleClient,
+        string $userAgent = self::DEFAULT_USER_AGENT
     ) {
+        $this->userAgent = $userAgent;
+        $this->guzzleClient = $guzzleClient;
     }
 
     /**

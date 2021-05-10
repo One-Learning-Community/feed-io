@@ -115,7 +115,7 @@ class Feed extends Node implements FeedInterface, ArrayableInterface, \JsonSeria
         $this->items->next();
     }
 
-    public function key(): float|bool|int|string|null
+    public function key()
     {
         return $this->items->key();
     }

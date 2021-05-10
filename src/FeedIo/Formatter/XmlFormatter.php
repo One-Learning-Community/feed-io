@@ -22,9 +22,12 @@ use FeedIo\FormatterInterface;
  */
 class XmlFormatter implements FormatterInterface
 {
+    protected XmlAbstract $standard;
+
     public function __construct(
-        protected XmlAbstract $standard
+        XmlAbstract $standard
     ) {
+        $this->standard = $standard;
     }
 
     public function setHeaders(DOMDocument $document, FeedInterface $feed) : XmlFormatter

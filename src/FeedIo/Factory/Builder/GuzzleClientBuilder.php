@@ -12,9 +12,12 @@ use \GuzzleHttp\Client as GuzzleClient;
  */
 class GuzzleClientBuilder implements ClientBuilderInterface
 {
+    private array $config = [];
+
     public function __construct(
-        private array $config = []
+        array $config = []
     ) {
+        $this->config = $config;
     }
 
     /**

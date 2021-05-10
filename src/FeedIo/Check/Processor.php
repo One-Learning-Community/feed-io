@@ -13,10 +13,12 @@ use FeedIo\FeedIo;
 class Processor
 {
     protected ?array $checks = [];
+    protected FeedIo $feedIo;
 
     public function __construct(
-        protected FeedIo $feedIo
+        FeedIo $feedIo
     ) {
+        $this->feedIo = $feedIo;
     }
 
     /**

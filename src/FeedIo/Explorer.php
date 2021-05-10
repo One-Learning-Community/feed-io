@@ -14,11 +14,15 @@ class Explorer
         'application/atom+xml',
         'application/rss+xml'
     ];
+    protected ClientInterface $client;
+    protected LoggerInterface $logger;
 
     public function __construct(
-        protected ClientInterface $client,
-        protected LoggerInterface $logger
+        ClientInterface $client,
+        LoggerInterface $logger
     ) {
+        $this->logger = $logger;
+        $this->client = $client;
     }
 
     public function discover(string $url) : array

@@ -9,15 +9,19 @@ use Psr\Http\Message\ResponseInterface;
 
 class ResponseBuilder
 {
+    protected int $maxAge = 600;
+    protected bool $public = true;
 
     /**
      * @param int $maxAge max-age in seconds
      * @param bool $public is the response public
      */
     public function __construct(
-        protected int $maxAge = 600,
-        protected bool $public = true
+        int $maxAge = 600,
+        bool $public = true
     ) {
+        $this->public = $public;
+        $this->maxAge = $maxAge;
     }
 
     /**

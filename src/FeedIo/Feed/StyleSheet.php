@@ -5,11 +5,15 @@ namespace FeedIo\Feed;
 class StyleSheet
 {
     const DEFAULT_TYPE = 'text/xsl';
+    protected string $href;
+    protected string $type = self::DEFAULT_TYPE;
 
     public function __construct(
-        protected string $href,
-        protected string $type = self::DEFAULT_TYPE
+        string $href,
+        string $type = self::DEFAULT_TYPE
     ) {
+        $this->type = $type;
+        $this->href = $href;
     }
 
     public function getHref(): string

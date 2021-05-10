@@ -19,10 +19,12 @@ abstract class StandardAbstract
     const SYNTAX_FORMAT = '';
 
     protected array $mandatoryFields = [];
+    protected DateTimeBuilderInterface $dateTimeBuilder;
 
     public function __construct(
-        protected DateTimeBuilderInterface $dateTimeBuilder
+        DateTimeBuilderInterface $dateTimeBuilder
     ) {
+        $this->dateTimeBuilder = $dateTimeBuilder;
     }
 
     /**

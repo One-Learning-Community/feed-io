@@ -6,10 +6,13 @@ use \Psr\Http\Message\ResponseInterface;
 
 class ServerErrorException extends HttpRequestException
 {
+    protected ResponseInterface $response;
+
     public function __construct(
-        protected ResponseInterface $response,
+        ResponseInterface $response,
         float $duration = 0
     ) {
+        $this->response = $response;
         parent::__construct(
             'internal server error',
             $duration

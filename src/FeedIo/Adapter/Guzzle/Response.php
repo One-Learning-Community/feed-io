@@ -14,11 +14,15 @@ class Response implements ResponseInterface
     const HTTP_LAST_MODIFIED = 'Last-Modified';
 
     protected ?string $body = null;
+    protected PsrResponseInterface $psrResponse;
+    protected float $duration;
 
     public function __construct(
-        protected PsrResponseInterface $psrResponse,
-        protected float $duration
+        PsrResponseInterface $psrResponse,
+        float $duration
     ) {
+        $this->duration = $duration;
+        $this->psrResponse = $psrResponse;
     }
 
     public function getDuration(): float

@@ -24,15 +24,19 @@ use Psr\Log\LoggerInterface;
 class Reader
 {
     protected array $parsers = [];
+    protected ClientInterface $client;
+    protected LoggerInterface $logger;
 
     /**
      * @param ClientInterface $client
      * @param LoggerInterface $logger
      */
     public function __construct(
-        protected ClientInterface $client,
-        protected LoggerInterface $logger
+        ClientInterface $client,
+        LoggerInterface $logger
     ) {
+        $this->logger = $logger;
+        $this->client = $client;
     }
 
     /**

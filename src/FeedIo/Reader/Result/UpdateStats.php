@@ -28,14 +28,16 @@ class UpdateStats
     const DEFAULT_MARGIN_RATIO = 0.1;
 
     protected array $intervals = [];
+    protected FeedInterface $feed;
 
     /**
      * UpdateStats constructor.
      * @param FeedInterface $feed
      */
     public function __construct(
-        protected FeedInterface $feed
+        FeedInterface $feed
     ) {
+        $this->feed = $feed;
         $this->intervals = $this->computeIntervals($this->extractDates($feed));
     }
 

@@ -38,9 +38,11 @@ class DateTimeBuilder implements DateTimeBuilderInterface
     protected DateTimeZone $serverTimezone;
 
     protected string $lastGuessedFormat = DateTime::RFC2822;
+    protected ?LoggerInterface $logger = null;
 
-    public function __construct(protected ?LoggerInterface $logger = null)
+    public function __construct(?LoggerInterface $logger = null)
     {
+        $this->logger = $logger;
         $this->setTimezone(new DateTimeZone(date_default_timezone_get()));
     }
 
@@ -93,7 +95,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
             $this->logger->notice("unsupported date format : {$string}, returning current datetime");
         }
 
-        $date = new DateTime(timezone: $this->getFeedTimezone());
+        $date = new DateTime('now', $this->getFeedTimezone());
         $date->setTimezone($this->getTimezone());
 
         return $date;
@@ -134,7 +136,7 @@ class DateTimeBuilder implements DateTimeBuilderInterface
         $this->setServerTimezone($timezone);
     }
 
-    protected function newDate(string $format, string $string): DateTime|bool
+    protected function newDate(string $format, string $string)
     {
         if (!! $this->getFeedTimezone()) {
             return DateTime::createFromFormat($format, $string, $this->getFeedTimezone());

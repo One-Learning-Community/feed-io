@@ -10,13 +10,15 @@ use Iterator;
  */
 class ElementIterator extends \FilterIterator
 {
+    protected string $name;
 
     /**
      * @param \Iterator $iterator Set of elements to filter
      * @param string    $name     Element name to accept
      */
-    public function __construct(Iterator $iterator, protected string $name)
+    public function __construct(Iterator $iterator, string $name)
     {
+        $this->name = $name;
         parent::__construct($iterator);
     }
 

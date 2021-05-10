@@ -61,12 +61,18 @@ use Psr\Log\LoggerInterface;
 class FeedIo
 {
     protected Reader $reader;
+    protected ClientInterface $client;
+    protected LoggerInterface $logger;
+    protected ?SpecificationInterface $specification = null;
 
     public function __construct(
-        protected ClientInterface $client,
-        protected LoggerInterface $logger,
-        protected ?SpecificationInterface $specification = null
+        ClientInterface $client,
+        LoggerInterface $logger,
+        ?SpecificationInterface $specification = null
     ) {
+        $this->specification = $specification;
+        $this->logger = $logger;
+        $this->client = $client;
         if (is_null($this->specification)) {
             $this->specification = new Specification($this->logger);
         }

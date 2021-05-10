@@ -22,11 +22,15 @@ class Specification implements SpecificationInterface
     protected array $standards;
 
     protected FixerSet $fixerSet;
+    protected LoggerInterface $logger;
+    protected ?DateTimeBuilderInterface $dateTimeBuilder = null;
 
     public function __construct(
-        protected LoggerInterface $logger,
-        protected ?DateTimeBuilderInterface $dateTimeBuilder = null,
+        LoggerInterface $logger,
+        ?DateTimeBuilderInterface $dateTimeBuilder = null
     ) {
+        $this->dateTimeBuilder = $dateTimeBuilder;
+        $this->logger = $logger;
         if (is_null($this->dateTimeBuilder)) {
             $this->dateTimeBuilder = new DateTimeBuilder($this->logger);
         }

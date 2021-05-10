@@ -18,10 +18,15 @@ use Psr\Log\LoggerInterface;
  */
 abstract class ParserAbstract
 {
+    protected StandardAbstract $standard;
+    protected LoggerInterface $logger;
+
     public function __construct(
-        protected StandardAbstract $standard,
-        protected LoggerInterface $logger
+        StandardAbstract $standard,
+        LoggerInterface $logger
     ) {
+        $this->logger = $logger;
+        $this->standard = $standard;
     }
 
     public function parse(Document $document, FeedInterface $feed) : FeedInterface

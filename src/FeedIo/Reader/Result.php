@@ -24,14 +24,24 @@ class Result
     protected DateTime $date;
 
     protected ?UpdateStats $updateStats = null;
+    protected Document $document;
+    protected FeedInterface $feed;
+    protected DateTime $modifiedSince;
+    protected ResponseInterface $response;
+    protected string $url;
 
     public function __construct(
-        protected Document $document,
-        protected FeedInterface $feed,
-        protected DateTime $modifiedSince,
-        protected ResponseInterface $response,
-        protected string $url
+        Document $document,
+        FeedInterface $feed,
+        DateTime $modifiedSince,
+        ResponseInterface $response,
+        string $url
     ) {
+        $this->url = $url;
+        $this->response = $response;
+        $this->modifiedSince = $modifiedSince;
+        $this->feed = $feed;
+        $this->document = $document;
         $this->date = new DateTime();
     }
 

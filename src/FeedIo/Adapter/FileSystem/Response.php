@@ -7,10 +7,15 @@ use FeedIo\Adapter\ResponseInterface;
 
 class Response implements ResponseInterface
 {
+    protected string $fileContent;
+    protected DateTime $lastModified;
+
     public function __construct(
-        protected string $fileContent,
-        protected DateTime $lastModified
+        string $fileContent,
+        DateTime $lastModified
     ) {
+        $this->lastModified = $lastModified;
+        $this->fileContent = $fileContent;
     }
 
     /**
