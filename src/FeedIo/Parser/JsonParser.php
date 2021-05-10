@@ -7,6 +7,7 @@ namespace FeedIo\Parser;
 use FeedIo\Feed\Item;
 use FeedIo\Feed\Item\Author;
 use FeedIo\Feed\ItemInterface;
+use FeedIo\Feed\Node\Category;
 use FeedIo\Feed\NodeInterface;
 use FeedIo\FeedInterface;
 use FeedIo\ParserAbstract;
@@ -73,6 +74,7 @@ class JsonParser extends ParserAbstract
             $item->setLink($this->readOffset($dataItem, 'url'));
             $this->readAuthor($item, $dataItem);
             $this->readMedias($item, $dataItem);
+            $this->readCategories($item, $dataItem);
             $feed->add($item);
         }
 
@@ -107,6 +109,16 @@ class JsonParser extends ParserAbstract
                 $item->addMedia($media);
             }
         }
+
+        if (array_key_exists('image', $data)) {
+            $media = new Item\Media();
+            $media
+                ->setType('image/jpeg')
+                ->setUrl($data['image'])
+                ->setLength(null)
+                ->setTitle(null);
+            $item->addMedia($media);
+        }
     }
 
     protected function readAuthor(NodeInterface $node, array $data): void
@@ -129,5 +141,17 @@ class JsonParser extends ParserAbstract
         $author->setEmail($this->readOffset($data, 'email'));
 
         return $author;
+    }
+
+    protected function readCategories(NodeInterface $node, array $data): void
+    {
+        if (array_key_exists('tags', $data)) {
+            foreach((array) $data['tags'] as $tag) {
+                $category = new Category();
+                $category->setLabel($tag);
+                $category->setTerm($tag);
+                $node->addCategory($category);
+            }
+        }
     }
 }
